@@ -1,0 +1,3660 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Operations",
+    "version": "1.0",
+    "description": "The Operations API contains all the Video Indexer APIs, such as Upload video, Get insights, and other operations"
+  },
+  "host": "api.videoindexer.ai",
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKeyHeader": {
+      "type": "apiKey",
+      "name": "Ocp-Apim-Subscription-Key",
+      "in": "header"
+    },
+    "apiKeyQuery": {
+      "type": "apiKey",
+      "name": "subscription-key",
+      "in": "query"
+    }
+  },
+  "security": [
+    {
+      "apiKeyHeader": []
+    },
+    {
+      "apiKeyQuery": []
+    }
+  ],
+  "paths": {
+    "/{location}/Accounts": {
+      "get": {
+        "description": "Get Accounts",
+        "operationId": "Get-Accounts",
+        "summary": "Get Accounts",
+        "tags": [
+          "Accounts"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (User Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "generateAccessTokens",
+            "in": "query",
+            "description": "Whether to generate an access token for each account.",
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ]
+          },
+          {
+            "name": "allowEdit",
+            "in": "query",
+            "description": "Whether the tokens have write permissions",
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved the accounts successfully",
+            "examples": {
+              "application/json": "[{\n  \"id\": \"SampleAccountId1\",\n  \"name\": \"SampleAccountName1\",\n  \"location\": \"eastus\",\n  \"accountType\": \"Trial\"\n}, {\n  \"id\": \"SampleAccountId2\",\n  \"name\": \"SampleAccountName2\",\n  \"location\": \"eastus\",\n  \"accountType\": \"Trial\"\n}]"
+            }
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}": {
+      "get": {
+        "description": "Get Account Details",
+        "operationId": "Get-Account",
+        "summary": "Get Account",
+        "tags": [
+          "Accounts"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the account information",
+            "examples": {
+              "application/json": {
+                "cName": "exampleName",
+                "description": "",
+                "createTime": "2018-04-25T08:31:58.6669575",
+                "owners": [
+                  {
+                    "id": "SampleAccountId",
+                    "name": "SampleUserName",
+                    "email": "SampleEmailAddress@gmail.com"
+                  }
+                ],
+                "contributors": [],
+                "invitedContributors": [],
+                "readers": [],
+                "invitedReaders": [],
+                "quotaUsage": {
+                  "dailyUploadCount": 0,
+                  "dailyUploadCountLimit": 0,
+                  "dailyUploadDurationInSeconds": 0,
+                  "dailyUploadDurationLimitInSeconds": 0,
+                  "everUploadDurationInSeconds": 0,
+                  "everUploadDurationLimitInSeconds": 0
+                },
+                "state": "Active",
+                "location": null,
+                "isPaid": false,
+                "amsApiEndpoint": null,
+                "id": "AccountId",
+                "name": "accountName",
+                "accountType": "Trial"
+              }
+            }
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/{videoId}/Index": {
+      "get": {
+        "description": "Get Video Index",
+        "operationId": "Get-Video-Index",
+        "summary": "Get Video Index",
+        "tags": [
+          "Videos"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "description": "The video id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Required for private videos<br>\nAccess token should match the authorization scope of the call (Account or Video, with Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>",
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "The language of the captions. \nSupported languages: Afrikaans: Af-ZA, Arabic: ar-EG, Bangla: Bn-BD, Bosnian: Bs-Latn, Bulgarian: Bg-BG, Catalan: Ca-ES, Chinese (Simplified): zh-Hans, Chinese (Traditional): Zh-Hant, Croatian: Hr-HR, Czech: Cs-CZ, Danish: Da-DK, Dutch: Nl-NL, English: en-US, Estonian: Et-EE, Fijian: En-FJ, Filipino: fil-PH, Finnish: Fi-FI, French: fr-FR, German: de-DE, Greek: El-GR, Haitian: Fr-HT, Hebrew: He-IL, Hindi: Hi-IN, Hungarian: Hu-HU, Indonesian: Id-ID, Italian: it-IT, Japanese: ja-JP, Kiswahili: Sw-KE, Korean: Ko-KR, Latvian: Lv-LV, Lithuanian: Lt-LT, Malagasy: Mg-MG, Malay: Ms-MY, Maltese: Mt-MT, Norwegian: Nb-NO, Persian: Fa-IR, Polish: Pl-PL, Portuguese: pt-BR, Romanian: Ro-RO, Russian: ru-RU, Samoan: En-WS, Serbian (Cyrillic): Sr-Cyrl-RS, Serbian (Latin): Sr-Latn-RS, Slovak: Sk-SK, Slovenian: Sl-SI, Spanish: es-ES, Swedish: Sv-SE, Tamil: Ta-IN, Thai: Th-TH, Tongan: To-TO, Turkish: Tr-TR, Ukrainian: Uk-UA, Urdu: Ur-PK, Vietnamese: Vi-VN.",
+            "type": "string",
+            "default": "English",
+            "enum": [
+              "English",
+              "Spanish",
+              "Russian",
+              "Japanese",
+              "German",
+              "French",
+              "Portuguese",
+              "Italian",
+              "Chinese",
+              "Filipino",
+              "Arabic",
+              "ar-EG",
+              "en-US",
+              "es-ES",
+              "fr-FR",
+              "de-DE",
+              "it-IT",
+              "ja-JP",
+              "pt-BR",
+              "ru-RU",
+              "zh-Hans",
+              "fil-PH",
+              "Af-ZA",
+              "Bn-BD",
+              "Bs-Latn",
+              "Bg-BG",
+              "Ca-ES",
+              "Hr-HR",
+              "Cs-CZ",
+              "Da-DK",
+              "Nl-NL",
+              "En-FJ",
+              "En-GB",
+              "En-WS",
+              "Es-MX",
+              "Et-EE",
+              "Fi-FI",
+              "El-GR",
+              "Fr-HT",
+              "He-IL",
+              "Hi-IN",
+              "Hu-HU",
+              "Id-ID",
+              "Sw-KE",
+              "Ko-KR",
+              "Lv-LV",
+              "Lt-LT",
+              "Mg-MG",
+              "Ms-MY",
+              "Mt-MT",
+              "Nb-NO",
+              "Fa-IR",
+              "Pl-PL",
+              "Ro-RO",
+              "Sr-Cyrl-RS",
+              "Sr-Latn-RS",
+              "Sk-SK",
+              "Sl-SI",
+              "Sv-SE",
+              "Ta-IN",
+              "Th-TH",
+              "To-TO",
+              "Tr-TR",
+              "Uk-UA",
+              "Ur-PK",
+              "Vi-VN",
+              "Zh-Hant"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Video index retrieved successfully",
+            "examples": {
+              "application/json": {
+                "accountId": "SampleAccountId",
+                "id": "476892a745",
+                "name": "test2",
+                "description": null,
+                "userName": "SampleUserName",
+                "created": "2018-04-25T17:40:28.2732821+00:00",
+                "privacyMode": "Private",
+                "state": "Processed",
+                "isOwned": true,
+                "isEditable": false,
+                "isBase": true,
+                "durationInSeconds": 13,
+                "summarizedInsights": {
+                  "name": "test2",
+                  "id": "476892a745",
+                  "privacyMode": "Private",
+                  "duration": {
+                    "time": "00:00:13",
+                    "seconds": 13
+                  },
+                  "thumbnailVideoId": "476892a745",
+                  "thumbnailId": "d869021e-2a0b-4355-9c80-144e51aa8f6d",
+                  "faces": [],
+                  "Keywords": [],
+                  "sentiments": [
+                    {
+                      "sentimentKey": "Neutral",
+                      "appearances": [
+                        {
+                          "startTime": "00:00:00",
+                          "endTime": "00:00:13",
+                          "startSeconds": 0,
+                          "endSeconds": 13
+                        }
+                      ],
+                      "seenDurationRatio": 1
+                    }
+                  ],
+                  "audioEffects": [],
+                  "labels": [],
+                  "brands": [],
+                  "statistics": {
+                    "correspondenceCount": 0,
+                    "speakerTalkToListenRatio": {},
+                    "speakerLongestMonolog": {},
+                    "speakerNumberOfFragments": {},
+                    "speakerWordCount": {}
+                  }
+                },
+                "videos": [
+                  {
+                    "accountId": "SampleAccountId",
+                    "id": "476892a745",
+                    "state": "Processed",
+                    "privacyMode": "Private",
+                    "processingProgress": "100%",
+                    "failureCode": "General",
+                    "failureMessage": "",
+                    "externalId": null,
+                    "externalUrl": null,
+                    "metadata": null,
+                    "insights": {
+                      "version": "0.9.0.0",
+                      "sourceLanguage": "En-US",
+                      "language": "En-US",
+                      "transcript": [
+                        {
+                          "id": 0,
+                          "text": "",
+                          "confidence": 1,
+                          "speakerId": -1,
+                          "language": "En-US",
+                          "instances": [
+                            {
+                              "adjustedStart": "00:00:00",
+                              "adjustedEnd": "00:00:13",
+                              "start": "00:00:00",
+                              "end": "00:00:13"
+                            }
+                          ]
+                        }
+                      ],
+                      "sentiments": [
+                        {
+                          "id": 0,
+                          "score": 0,
+                          "sentimentType": 1,
+                          "instances": [
+                            {
+                              "adjustedStart": "00:00:00",
+                              "adjustedEnd": "00:00:13",
+                              "start": "00:00:00",
+                              "end": "00:00:13"
+                            }
+                          ]
+                        }
+                      ],
+                      "blocks": [
+                        {
+                          "id": 0,
+                          "instances": [
+                            {
+                              "adjustedStart": "00:00:00",
+                              "adjustedEnd": "00:00:13",
+                              "start": "00:00:00",
+                              "end": "00:00:13"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "thumbnailId": "d869021e-2a0b-4355-9c80-144e51aa8f6d",
+                    "publishedUrl": "https://videvmediaservices.streaming.mediaservices.windows.net:443/1dda50a1-217b-4988-919c-bd0dc13414a9/SampleVideo_1280x720_2mb222.ism/manifest",
+                    "publishedProxyUrl": null,
+                    "viewToken": "Bearer=SampleAuthToken",
+                    "sourceLanguage": "En-US",
+                    "language": "En-US",
+                    "indexingPreset": "Default",
+                    "linguisticModelId": "00000000-0000-0000-0000-000000000000"
+                  }
+                ],
+                "videosRanges": null,
+                "social": {
+                  "likedByUser": false,
+                  "likes": 0,
+                  "views": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos": {
+      "get": {
+        "description": "Get a list of videos in the account",
+        "operationId": "List-videos",
+        "summary": "List Videos",
+        "tags": [
+          "Videos"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account with Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "page size",
+            "type": "integer"
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "The number of pages to skip",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Video list retrieved successfully",
+            "examples": {
+              "application/json": {
+                "results": [
+                  {
+                    "accountId": "SampleAccountId",
+                    "id": "476892a745",
+                    "partition": null,
+                    "externalId": null,
+                    "metadata": null,
+                    "name": "test2",
+                    "description": null,
+                    "created": "2018-04-25T17:40:28.273+00:00",
+                    "lastModified": "2018-04-25T17:43:11.548+00:00",
+                    "lastIndexed": "2018-04-25T17:40:38.561+00:00",
+                    "privacyMode": "Private",
+                    "userName": "SampleUserName",
+                    "isOwned": true,
+                    "isBase": true,
+                    "state": "Processed",
+                    "processingProgress": "",
+                    "durationInSeconds": 13,
+                    "thumbnailVideoId": "476892a745",
+                    "thumbnailId": "d869021e-2a0b-4355-9c80-144e51aa8f6d",
+                    "social": {
+                      "likedByUser": false,
+                      "likes": 0,
+                      "views": 0
+                    },
+                    "searchMatches": [],
+                    "indexingPreset": "Default",
+                    "streamingPreset": "Default",
+                    "sourceLanguage": "En-US"
+                  },
+                  {
+                    "accountId": "SampleAccountId",
+                    "id": "30e66ec1b1",
+                    "partition": null,
+                    "externalId": null,
+                    "metadata": null,
+                    "name": "test3",
+                    "description": null,
+                    "created": "2018-04-25T16:50:00.967+00:00",
+                    "lastModified": "2018-04-25T16:58:13.409+00:00",
+                    "lastIndexed": "2018-04-25T16:50:12.991+00:00",
+                    "privacyMode": "Private",
+                    "userName": "SampleUserName",
+                    "isOwned": true,
+                    "isBase": true,
+                    "state": "Processing",
+                    "processingProgress": "",
+                    "durationInSeconds": 13,
+                    "thumbnailVideoId": "30e66ec1b1",
+                    "thumbnailId": "55848b7b-8be7-4285-893e-cdc366e09133",
+                    "social": {
+                      "likedByUser": false,
+                      "likes": 0,
+                      "views": 0
+                    },
+                    "searchMatches": [],
+                    "indexingPreset": "Default",
+                    "streamingPreset": "Default",
+                    "sourceLanguage": "En-US"
+                  },
+                  {
+                    "accountId": "SampleAccountId",
+                    "id": "3a9220459b",
+                    "partition": null,
+                    "externalId": null,
+                    "metadata": null,
+                    "name": "SampleVideo_1280x720_2mb222",
+                    "description": null,
+                    "created": "2018-04-25T16:29:43.099+00:00",
+                    "lastModified": "2018-04-25T16:57:07.7+00:00",
+                    "lastIndexed": "2018-04-25T16:29:54.767+00:00",
+                    "privacyMode": "Private",
+                    "userName": "ExampleUser",
+                    "isOwned": true,
+                    "isBase": true,
+                    "state": "Processing",
+                    "processingProgress": "",
+                    "durationInSeconds": 13,
+                    "thumbnailVideoId": "3a9220459b",
+                    "thumbnailId": "21700e5e-9736-42b9-9bbb-124df35295eb",
+                    "social": {
+                      "likedByUser": false,
+                      "likes": 0,
+                      "views": 0
+                    },
+                    "searchMatches": [],
+                    "indexingPreset": "Default",
+                    "streamingPreset": "Default",
+                    "sourceLanguage": "En-US"
+                  }
+                ],
+                "nextPage": {
+                  "pageSize": 25,
+                  "skip": 0,
+                  "done": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "post": {
+        "description": "Uploads the given video, starts indexing it and returns a new Video id.<br>\nThe supported formats are listed\n<a href=https://docs.microsoft.com/en-us/azure/media-services/media-services-media-encoder-standard-formats target=\"_blank\"> here</a>",
+        "operationId": "Upload-video",
+        "summary": "Upload Video",
+        "tags": [
+          "Videos"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account or Video with Write)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "The video name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "The video description.",
+            "type": "string"
+          },
+          {
+            "name": "partition",
+            "in": "query",
+            "description": "A partition to partition videos by (used for searching a specific partition)",
+            "type": "string"
+          },
+          {
+            "name": "externalId",
+            "in": "query",
+            "description": "An external id to associate with the video (can be searched for later).",
+            "type": "string"
+          },
+          {
+            "name": "callbackUrl",
+            "in": "query",
+            "description": "A url to notify when indexing is completed.\nIt should be a POST url and VideoIndexer will add 2 additional query string parameters to it: id and state.\n\nFor example, if the callback url is 'https://test.com/notifyme?projectName=MyProject', the notification will be sent with additional parameters to 'https://test.com/notifyme?projectName=MyProject&id=1234abcd&state=Processed'.",
+            "type": "string"
+          },
+          {
+            "name": "metadata",
+            "in": "query",
+            "description": "Metadata to associate with the video (will be returned in queries).",
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "The language of the video, to be used when generating the transcript. Arabic: ar-EG, Chinese (Simplified): zh-Hans, English: en-US, French: fr-FR, German: de-DE, Italian: it-IT, Japanese: ja-JP, Portuguese: pt-BR, Russian: ru-RU, Spanish: es-ES, or auto for auto-detection.",
+            "type": "string",
+            "enum": [
+              "English",
+              "Spanish",
+              "Russian",
+              "Japanese",
+              "German",
+              "French",
+              "Portuguese",
+              "Italian",
+              "Chinese",
+              "Filipino",
+              "Arabic",
+              "ar-EG",
+              "en-US",
+              "es-ES",
+              "fr-FR",
+              "de-DE",
+              "it-IT",
+              "ja-JP",
+              "pt-BR",
+              "ru-RU",
+              "zh-Hans",
+              "fil-PH",
+              "Af-ZA",
+              "Bn-BD",
+              "Bs-Latn",
+              "Bg-BG",
+              "Ca-ES",
+              "Hr-HR",
+              "Cs-CZ",
+              "Da-DK",
+              "Nl-NL",
+              "En-FJ",
+              "En-GB",
+              "En-WS",
+              "Es-MX",
+              "Et-EE",
+              "Fi-FI",
+              "El-GR",
+              "Fr-HT",
+              "He-IL",
+              "Hi-IN",
+              "Hu-HU",
+              "Id-ID",
+              "Sw-KE",
+              "Ko-KR",
+              "Lv-LV",
+              "Lt-LT",
+              "Mg-MG",
+              "Ms-MY",
+              "Mt-MT",
+              "Nb-NO",
+              "Fa-IR",
+              "Pl-PL",
+              "Ro-RO",
+              "Sr-Cyrl-RS",
+              "Sr-Latn-RS",
+              "Sk-SK",
+              "Sl-SI",
+              "Sv-SE",
+              "Ta-IN",
+              "Th-TH",
+              "To-TO",
+              "Tr-TR",
+              "Uk-UA",
+              "Ur-PK",
+              "Vi-VN",
+              "Zh-Hant",
+              "auto"
+            ]
+          },
+          {
+            "name": "videoUrl",
+            "in": "query",
+            "description": "A public url of the video/audio file (url encoded). If not specified, the file should be passed as a multipart/form body content.",
+            "type": "string"
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "The uploaded file name.",
+            "type": "string"
+          },
+          {
+            "name": "indexingPreset",
+            "in": "query",
+            "description": "The indexing preset to use (Default/AudioOnly/DefaultWithNoiseReduction).",
+            "type": "string",
+            "enum": [
+              "Default",
+              "AudioOnly",
+              "DefaultWithNoiseReduction"
+            ]
+          },
+          {
+            "name": "streamingPreset",
+            "in": "query",
+            "description": "The streaming preset to use (Default/SingleBitrate/AdaptiveBitrate/NoStreaming).",
+            "type": "string",
+            "default": "Default",
+            "enum": [
+              "Default",
+              "AdaptiveBitrate",
+              "NoStreaming",
+              "SingleBitrate"
+            ]
+          },
+          {
+            "name": "linguisticModelId",
+            "in": "query",
+            "description": "Linguistic model id as received by 'create linguistic model' call",
+            "type": "string"
+          },
+          {
+            "name": "privacy",
+            "in": "query",
+            "description": "The video privacy (Private or Public)",
+            "type": "string",
+            "enum": [
+              "Private",
+              "Public"
+            ]
+          },
+          {
+            "name": "externalUrl",
+            "in": "query",
+            "description": "An external URL to associate with the video (can be retrieved later) ",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {}
+          }
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "Video uploaded successfully",
+            "examples": {
+              "application/json": {
+                "accountId": "SampleAccountId",
+                "id": "3a9220459b",
+                "partition": null,
+                "externalId": null,
+                "metadata": null,
+                "name": "SampleVideo_1280x720_2mb222",
+                "description": null,
+                "created": "2018-04-25T16:29:43.0992053+00:00",
+                "lastModified": "2018-04-25T16:29:43.1929511+00:00",
+                "lastIndexed": "2018-04-25T16:29:43.1929511+00:00",
+                "privacyMode": "Private",
+                "userName": "SampleUserName",
+                "isOwned": true,
+                "isBase": true,
+                "state": "Uploaded",
+                "processingProgress": "",
+                "durationInSeconds": 13,
+                "thumbnailVideoId": "3a9220459b",
+                "thumbnailId": "00000000-0000-0000-0000-000000000000",
+                "social": {
+                  "likedByUser": false,
+                  "likes": 0,
+                  "views": 0
+                },
+                "searchMatches": [],
+                "indexingPreset": "Default",
+                "streamingPreset": "Default",
+                "sourceLanguage": "En-US"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameter"
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/Search": {
+      "get": {
+        "description": "Search videos in the specified account",
+        "operationId": "Search-videos",
+        "summary": "Search Videos",
+        "tags": [
+          "Videos"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Free text to search for.",
+            "type": "string"
+          },
+          {
+            "name": "textScope",
+            "in": "query",
+            "description": "The text scope to search in.",
+            "type": "string",
+            "enum": [
+              "Transcript",
+              "Ocr"
+            ]
+          },
+          {
+            "name": "privacy",
+            "in": "query",
+            "description": "A privacy level (Private, Organization, Public).",
+            "type": "string",
+            "enum": [
+              "Private",
+              "Public"
+            ]
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "A breakdown id to search for.",
+            "type": "string"
+          },
+          {
+            "name": "partition",
+            "in": "query",
+            "description": "A partition to search for.",
+            "type": "string"
+          },
+          {
+            "name": "owner",
+            "in": "query",
+            "description": "An owner to search for.",
+            "type": "string"
+          },
+          {
+            "name": "face",
+            "in": "query",
+            "description": "A face to search for.",
+            "type": "string"
+          },
+          {
+            "name": "externalId",
+            "in": "query",
+            "description": "An external id to search for (which was associated with the video at upload).",
+            "type": "string"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The number of results to return.",
+            "type": "integer"
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "The number of results to skip (used for paging).",
+            "type": "integer"
+          },
+          {
+            "name": "sourceLanguage",
+            "in": "query",
+            "description": "Include only videos with that source language. You can specify multiple language parameters (e.g. $language=English&language=French) to search multiple languages. Having no language parameter will search all languages.\nSupported languages: Afrikaans: Af-ZA, Arabic: ar-EG, Bangla: Bn-BD, Bosnian: Bs-Latn, Bulgarian: Bg-BG, Catalan: Ca-ES, Chinese (Simplified): zh-Hans, Chinese (Traditional): Zh-Hant, Croatian: Hr-HR, Czech: Cs-CZ, Danish: Da-DK, Dutch: Nl-NL, English: en-US, Estonian: Et-EE, Fijian: En-FJ, Filipino: fil-PH, Finnish: Fi-FI, French: fr-FR, German: de-DE, Greek: El-GR, Haitian: Fr-HT, Hebrew: He-IL, Hindi: Hi-IN, Hungarian: Hu-HU, Indonesian: Id-ID, Italian: it-IT, Japanese: ja-JP, Kiswahili: Sw-KE, Korean: Ko-KR, Latvian: Lv-LV, Lithuanian: Lt-LT, Malagasy: Mg-MG, Malay: Ms-MY, Maltese: Mt-MT, Norwegian: Nb-NO, Persian: Fa-IR, Polish: Pl-PL, Portuguese: pt-BR, Romanian: Ro-RO, Russian: ru-RU, Samoan: En-WS, Serbian (Cyrillic): Sr-Cyrl-RS, Serbian (Latin): Sr-Latn-RS, Slovak: Sk-SK, Slovenian: Sl-SI, Spanish: es-ES, Swedish: Sv-SE, Tamil: Ta-IN, Thai: Th-TH, Tongan: To-TO, Turkish: Tr-TR, Ukrainian: Uk-UA, Urdu: Ur-PK, Vietnamese: Vi-VN.",
+            "type": "string",
+            "default": "English",
+            "enum": [
+              "English",
+              "Spanish",
+              "Russian",
+              "Japanese",
+              "German",
+              "French",
+              "Portuguese",
+              "Italian",
+              "Chinese",
+              "Filipino",
+              "Arabic",
+              "ar-EG",
+              "en-US",
+              "es-ES",
+              "fr-FR",
+              "de-DE",
+              "it-IT",
+              "ja-JP",
+              "pt-BR",
+              "ru-RU",
+              "zh-Hans",
+              "fil-PH",
+              "Af-ZA",
+              "Bn-BD",
+              "Bs-Latn",
+              "Bg-BG",
+              "Ca-ES",
+              "Hr-HR",
+              "Cs-CZ",
+              "Da-DK",
+              "Nl-NL",
+              "En-FJ",
+              "En-WS",
+              "Et-EE",
+              "Fi-FI",
+              "El-GR",
+              "Fr-HT",
+              "He-IL",
+              "Hi-IN",
+              "Hu-HU",
+              "Id-ID",
+              "Sw-KE",
+              "Ko-KR",
+              "Lv-LV",
+              "Lt-LT",
+              "Mg-MG",
+              "Ms-MY",
+              "Mt-MT",
+              "Nb-NO",
+              "Fa-IR",
+              "Pl-PL",
+              "Ro-RO",
+              "Sr-Cyrl-RS",
+              "Sr-Latn-RS",
+              "Sk-SK",
+              "Sl-SI",
+              "Sv-SE",
+              "Ta-IN",
+              "Th-TH",
+              "To-TO",
+              "Tr-TR",
+              "Uk-UA",
+              "Ur-PK",
+              "Vi-VN",
+              "Zh-Hant"
+            ]
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "The language to search in. You can specify multiple language parameters (e.g. $language=English&language=French) to search multiple languages. Having no language parameter will search all languages.\nSupported languages: Afrikaans: Af-ZA, Arabic: ar-EG, Bangla: Bn-BD, Bosnian: Bs-Latn, Bulgarian: Bg-BG, Catalan: Ca-ES, Chinese (Simplified): zh-Hans, Chinese (Traditional): Zh-Hant, Croatian: Hr-HR, Czech: Cs-CZ, Danish: Da-DK, Dutch: Nl-NL, English: en-US, Estonian: Et-EE, Fijian: En-FJ, Filipino: fil-PH, Finnish: Fi-FI, French: fr-FR, German: de-DE, Greek: El-GR, Haitian: Fr-HT, Hebrew: He-IL, Hindi: Hi-IN, Hungarian: Hu-HU, Indonesian: Id-ID, Italian: it-IT, Japanese: ja-JP, Kiswahili: Sw-KE, Korean: Ko-KR, Latvian: Lv-LV, Lithuanian: Lt-LT, Malagasy: Mg-MG, Malay: Ms-MY, Maltese: Mt-MT, Norwegian: Nb-NO, Persian: Fa-IR, Polish: Pl-PL, Portuguese: pt-BR, Romanian: Ro-RO, Russian: ru-RU, Samoan: En-WS, Serbian (Cyrillic): Sr-Cyrl-RS, Serbian (Latin): Sr-Latn-RS, Slovak: Sk-SK, Slovenian: Sl-SI, Spanish: es-ES, Swedish: Sv-SE, Tamil: Ta-IN, Thai: Th-TH, Tongan: To-TO, Turkish: Tr-TR, Ukrainian: Uk-UA, Urdu: Ur-PK, Vietnamese: Vi-VN.",
+            "type": "string",
+            "default": "English",
+            "enum": [
+              "English",
+              "Spanish",
+              "Russian",
+              "Japanese",
+              "German",
+              "French",
+              "Portuguese",
+              "Italian",
+              "Chinese",
+              "Filipino",
+              "Arabic",
+              "ar-EG",
+              "en-US",
+              "es-ES",
+              "fr-FR",
+              "de-DE",
+              "it-IT",
+              "ja-JP",
+              "pt-BR",
+              "ru-RU",
+              "zh-Hans",
+              "fil-PH",
+              "Af-ZA",
+              "Bn-BD",
+              "Bs-Latn",
+              "Bg-BG",
+              "Ca-ES",
+              "Hr-HR",
+              "Cs-CZ",
+              "Da-DK",
+              "Nl-NL",
+              "En-FJ",
+              "En-GB",
+              "En-WS",
+              "Es-MX",
+              "Et-EE",
+              "Fi-FI",
+              "El-GR",
+              "Fr-HT",
+              "He-IL",
+              "Hi-IN",
+              "Hu-HU",
+              "Id-ID",
+              "Sw-KE",
+              "Ko-KR",
+              "Lv-LV",
+              "Lt-LT",
+              "Mg-MG",
+              "Ms-MY",
+              "Mt-MT",
+              "Nb-NO",
+              "Fa-IR",
+              "Pl-PL",
+              "Ro-RO",
+              "Sr-Cyrl-RS",
+              "Sr-Latn-RS",
+              "Sk-SK",
+              "Sl-SI",
+              "Sv-SE",
+              "Ta-IN",
+              "Th-TH",
+              "To-TO",
+              "Tr-TR",
+              "Uk-UA",
+              "Ur-PK",
+              "Vi-VN",
+              "Zh-Hant"
+            ]
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Required for private videos or account scope search<br>\nAccess token should match the authorization scope of the call - A video token (for a single video search) or account token with read permissions<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "examples": {
+              "application/json": {
+                "results": [
+                  {
+                    "accountId": "SampleAccountId",
+                    "id": "476892a745",
+                    "partition": null,
+                    "externalId": null,
+                    "metadata": null,
+                    "name": "test2",
+                    "description": null,
+                    "created": "2018-04-25T17:40:28.273+00:00",
+                    "lastModified": "2018-04-25T17:43:11.548+00:00",
+                    "lastIndexed": "2018-04-25T17:40:38.561+00:00",
+                    "privacyMode": "Private",
+                    "userName": "SampleUserName",
+                    "isOwned": true,
+                    "isBase": true,
+                    "state": "Processed",
+                    "processingProgress": "",
+                    "durationInSeconds": 13,
+                    "thumbnailVideoId": "476892a745",
+                    "thumbnailId": "d869021e-2a0b-4355-9c80-144e51aa8f6d",
+                    "social": {
+                      "likedByUser": false,
+                      "likes": 0,
+                      "views": 0
+                    },
+                    "searchMatches": [],
+                    "indexingPreset": "Default",
+                    "streamingPreset": "Default",
+                    "sourceLanguage": "En-US"
+                  },
+                  {
+                    "accountId": "SampleAccountId",
+                    "id": "30e66ec1b1",
+                    "partition": null,
+                    "externalId": null,
+                    "metadata": null,
+                    "name": "test3",
+                    "description": null,
+                    "created": "2018-04-25T16:50:00.967+00:00",
+                    "lastModified": "2018-04-25T16:58:13.409+00:00",
+                    "lastIndexed": "2018-04-25T16:50:12.991+00:00",
+                    "privacyMode": "Private",
+                    "userName": "SampleUserName",
+                    "isOwned": true,
+                    "isBase": true,
+                    "state": "Processing",
+                    "processingProgress": "",
+                    "durationInSeconds": 13,
+                    "thumbnailVideoId": "30e66ec1b1",
+                    "thumbnailId": "55848b7b-8be7-4285-893e-cdc366e09133",
+                    "social": {
+                      "likedByUser": false,
+                      "likes": 0,
+                      "views": 0
+                    },
+                    "searchMatches": [],
+                    "indexingPreset": "Default",
+                    "streamingPreset": "Default",
+                    "sourceLanguage": "En-US"
+                  },
+                  {
+                    "accountId": "SampleAccountId",
+                    "id": "3a9220459b",
+                    "partition": null,
+                    "externalId": null,
+                    "metadata": null,
+                    "name": "SampleVideo_1280x720_2mb222",
+                    "description": null,
+                    "created": "2018-04-25T16:29:43.099+00:00",
+                    "lastModified": "2018-04-25T16:57:07.7+00:00",
+                    "lastIndexed": "2018-04-25T16:29:54.767+00:00",
+                    "privacyMode": "Private",
+                    "userName": "SampleUserName",
+                    "isOwned": true,
+                    "isBase": true,
+                    "state": "Processing",
+                    "processingProgress": "",
+                    "durationInSeconds": 13,
+                    "thumbnailVideoId": "3a9220459b",
+                    "thumbnailId": "21700e5e-9736-42b9-9bbb-124df35295eb",
+                    "social": {
+                      "likedByUser": false,
+                      "likes": 0,
+                      "views": 0
+                    },
+                    "searchMatches": [],
+                    "indexingPreset": "Default",
+                    "streamingPreset": "Default",
+                    "sourceLanguage": "En-US"
+                  }
+                ],
+                "nextPage": {
+                  "pageSize": 25,
+                  "skip": 0,
+                  "done": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/{videoId}": {
+      "delete": {
+        "description": "Deletes the specified video and all related insights created from when the video was indexed",
+        "operationId": "Delete-video",
+        "summary": "Delete Video",
+        "tags": [
+          "Videos"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "description": "The id of the video to delete",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Video or Account, with Write)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Video deleted successfully"
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/{videoId}/ReIndex": {
+      "put": {
+        "description": "Re-index video",
+        "operationId": "Re-index-video",
+        "summary": "Re-Index Video",
+        "tags": [
+          "Videos"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "description": "The video id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account or Video, with Write)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "indexingPreset",
+            "in": "query",
+            "description": "Indexing presets:\n NoiseReduction - Will run an additional step of noise reduction.\nAudio Only - get insights from audio only.\nDefault - Use no preset (similar to not populating the parameter)",
+            "type": "string",
+            "enum": [
+              "NoiseReduction",
+              "AudioOnly",
+              "Default"
+            ]
+          },
+          {
+            "name": "streamingPreset",
+            "in": "query",
+            "description": "Streaming presets: \nDefault - Single layer (similar to not sending the parameter)\nAdaptiveBitrate - Multiple layers based on media's framerate \nSingleBitrate - Single layer\n",
+            "type": "string",
+            "enum": [
+              "Default",
+              "AdaptiveBitrate",
+              "NoStreaming",
+              "SingleBitrate"
+            ]
+          },
+          {
+            "name": "callbackUrl",
+            "in": "query",
+            "description": "The callback uri to call with the status once the operation completes ",
+            "type": "string"
+          },
+          {
+            "name": "sourceLanguage",
+            "in": "query",
+            "description": "The language to set set as the source language of the video, to be used when generating the transcript. Arabic: ar-EG, Chinese (Simplified): zh-Hans, English: en-US, French: fr-FR, German: de-DE, Italian: it-IT, Japanese: ja-JP, Portuguese: pt-BR, Russian: ru-RU, Spanish: es-ES.",
+            "type": "string",
+            "enum": [
+              "English",
+              "Spanish",
+              "Russian",
+              "Japanese",
+              "German",
+              "French",
+              "Portuguese",
+              "Italian",
+              "Chinese",
+              "ar-EG",
+              "en-US",
+              "es-ES",
+              "ru-RU",
+              "ja-JP",
+              "de-DE",
+              "fr-FR",
+              "pt-BR",
+              "it-IT",
+              "zh-CN"
+            ]
+          },
+          {
+            "name": "languageModelId",
+            "in": "query",
+            "description": "LanguageModelId as appears in the LanguageModel returned by Language customization APIs",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/{videoId}/Index/Faces/{faceId}": {
+      "put": {
+        "description": "Update face",
+        "operationId": "Update-face",
+        "summary": "Update Face",
+        "tags": [
+          "Faces"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "description": "The video id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "faceId",
+            "in": "path",
+            "description": "The face id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account or Video, with Write)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "newName",
+            "in": "query",
+            "description": "A name for the face",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Face updated successfully"
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/{videoId}/Index/Transcript": {
+      "put": {
+        "description": "Updates the video with the given transcript.\nIf the specified language is the source language of the video, then the video will be re-indexed with the given transcript, and the transcript of all the other languages will be re-generated.\nIf the specified language is not the source language, the transcript of that language will be updated and the new text will be written into the existing lines and blocks of that language.",
+        "operationId": "Update-transcript",
+        "summary": "Update Transcript",
+        "tags": [
+          "Videos"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "description": "The video id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account or Video, with Write)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "The language to search in. You can specify multiple language parameters (e.g. $language=English&language=French) to search multiple languages. Having no language parameter will search all languages.\nSupported languages: Afrikaans: Af-ZA, Arabic: ar-EG, Bangla: Bn-BD, Bosnian: Bs-Latn, Bulgarian: Bg-BG, Catalan: Ca-ES, Chinese (Simplified): zh-Hans, Chinese (Traditional): Zh-Hant, Croatian: Hr-HR, Czech: Cs-CZ, Danish: Da-DK, Dutch: Nl-NL, English: en-US, Estonian: Et-EE, Fijian: En-FJ, Filipino: fil-PH, Finnish: Fi-FI, French: fr-FR, German: de-DE, Greek: El-GR, Haitian: Fr-HT, Hebrew: He-IL, Hindi: Hi-IN, Hungarian: Hu-HU, Indonesian: Id-ID, Italian: it-IT, Japanese: ja-JP, Kiswahili: Sw-KE, Korean: Ko-KR, Latvian: Lv-LV, Lithuanian: Lt-LT, Malagasy: Mg-MG, Malay: Ms-MY, Maltese: Mt-MT, Norwegian: Nb-NO, Persian: Fa-IR, Polish: Pl-PL, Portuguese: pt-BR, Romanian: Ro-RO, Russian: ru-RU, Samoan: En-WS, Serbian (Cyrillic): Sr-Cyrl-RS, Serbian (Latin): Sr-Latn-RS, Slovak: Sk-SK, Slovenian: Sl-SI, Spanish: es-ES, Swedish: Sv-SE, Tamil: Ta-IN, Thai: Th-TH, Tongan: To-TO, Turkish: Tr-TR, Ukrainian: Uk-UA, Urdu: Ur-PK, Vietnamese: Vi-VN.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "setAsSourceLanguage",
+            "in": "query",
+            "description": "If true the language parameter will be set as source language.",
+            "type": "string",
+            "default": "false",
+            "enum": [
+              "true",
+              "false"
+            ]
+          },
+          {
+            "name": "callbackUrl",
+            "in": "query",
+            "description": "A callback url to call with the status once the operation completes",
+            "type": "string"
+          },
+          {
+            "name": "vttBody",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/vttBody"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "Transcript updated successfully"
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/{videoId}/SourceFile": {
+      "delete": {
+        "description": "Deletes only the video source file, while keeping all insights created from when the video was indexed",
+        "operationId": "Delete-video-source-file",
+        "summary": "Delete Video Source File",
+        "tags": [
+          "Videos"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "description": "The video id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Video or Account, with Write)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/{videoId}/SourceFile/DownloadUrl": {
+      "get": {
+        "description": "Get video source file download url",
+        "operationId": "Get-video-source-file-download-url",
+        "summary": "Get Video Source File Download Url",
+        "tags": [
+          "Videos"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "description": "The video id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Required for private videos<br>\nAccess token should match the authorization scope of the call (Account or Video, with Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Video source file download url retrieved successfully",
+            "examples": {
+              "application/json": "\"https://videvmediaservicessa.blob.core.windows.net/asset-f8d675ca-2ad8-44b0-a6d2-e7a85e1c4f0b/SampleVideo_1280x720_2mb222.mp4?sv=2015-07-08&sr=c&si=9367f5c8-78fc-4e44-96f1-5c2311dcd540&sig=0T5oS3PTcJN8wiwmsa5ndrmb6N8tfIQXUB%2Bmq3jhmDM%3D&se=2018-04-26T09:31:23Z\""
+            }
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/{videoId}/Captions": {
+      "get": {
+        "description": "Get video captions",
+        "operationId": "Get-video-captions",
+        "summary": "Get Video Captions",
+        "tags": [
+          "Videos"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "description": "The video id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Required for private videos<br>\nAccess token should match the authorization scope of the call (Account or Video, with Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "The captions format (vtt, ttml, srt).",
+            "type": "string",
+            "default": "vtt",
+            "enum": [
+              "vtt",
+              "ttml",
+              "srt"
+            ]
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "The language of the captions. \nSupported languages: Afrikaans: Af-ZA, Arabic: ar-EG, Bangla: Bn-BD, Bosnian: Bs-Latn, Bulgarian: Bg-BG, Catalan: Ca-ES, Chinese (Simplified): zh-Hans, Chinese (Traditional): Zh-Hant, Croatian: Hr-HR, Czech: Cs-CZ, Danish: Da-DK, Dutch: Nl-NL, English: en-US, Estonian: Et-EE, Fijian: En-FJ, Filipino: fil-PH, Finnish: Fi-FI, French: fr-FR, German: de-DE, Greek: El-GR, Haitian: Fr-HT, Hebrew: He-IL, Hindi: Hi-IN, Hungarian: Hu-HU, Indonesian: Id-ID, Italian: it-IT, Japanese: ja-JP, Kiswahili: Sw-KE, Korean: Ko-KR, Latvian: Lv-LV, Lithuanian: Lt-LT, Malagasy: Mg-MG, Malay: Ms-MY, Maltese: Mt-MT, Norwegian: Nb-NO, Persian: Fa-IR, Polish: Pl-PL, Portuguese: pt-BR, Romanian: Ro-RO, Russian: ru-RU, Samoan: En-WS, Serbian (Cyrillic): Sr-Cyrl-RS, Serbian (Latin): Sr-Latn-RS, Slovak: Sk-SK, Slovenian: Sl-SI, Spanish: es-ES, Swedish: Sv-SE, Tamil: Ta-IN, Thai: Th-TH, Tongan: To-TO, Turkish: Tr-TR, Ukrainian: Uk-UA, Urdu: Ur-PK, Vietnamese: Vi-VN.",
+            "type": "string",
+            "default": "English",
+            "enum": [
+              "English",
+              "Spanish",
+              "Russian",
+              "Japanese",
+              "German",
+              "French",
+              "Portuguese",
+              "Italian",
+              "Chinese",
+              "Filipino",
+              "Arabic",
+              "ar-EG",
+              "en-US",
+              "es-ES",
+              "fr-FR",
+              "de-DE",
+              "it-IT",
+              "ja-JP",
+              "pt-BR",
+              "ru-RU",
+              "zh-Hans",
+              "fil-PH",
+              "Af-ZA",
+              "Bn-BD",
+              "Bs-Latn",
+              "Bg-BG",
+              "Ca-ES",
+              "Hr-HR",
+              "Cs-CZ",
+              "Da-DK",
+              "Nl-NL",
+              "En-FJ",
+              "En-GB",
+              "En-WS",
+              "Es-MX",
+              "Et-EE",
+              "Fi-FI",
+              "El-GR",
+              "Fr-HT",
+              "He-IL",
+              "Hi-IN",
+              "Hu-HU",
+              "Id-ID",
+              "Sw-KE",
+              "Ko-KR",
+              "Lv-LV",
+              "Lt-LT",
+              "Mg-MG",
+              "Ms-MY",
+              "Mt-MT",
+              "Nb-NO",
+              "Fa-IR",
+              "Pl-PL",
+              "Ro-RO",
+              "Sr-Cyrl-RS",
+              "Sr-Latn-RS",
+              "Sk-SK",
+              "Sl-SI",
+              "Sv-SE",
+              "Ta-IN",
+              "Th-TH",
+              "To-TO",
+              "Tr-TR",
+              "Uk-UA",
+              "Ur-PK",
+              "Vi-VN",
+              "Zh-Hant"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Video captions retrieved successfully"
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        },
+        "produces": [
+          "application/octet-stream"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/GetIdByExternalId": {
+      "get": {
+        "description": "Get video id by external id",
+        "operationId": "Get-video-id-by-external-id",
+        "summary": "Get Video Id by External Id",
+        "tags": [
+          "Videos"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "externalId",
+            "in": "query",
+            "description": "The external id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Required for private videos<br>\nAccess token should match the authorization scope of the call (Account with Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Video id retrieved successfully",
+            "examples": {
+              "application/json": "\"ExampleId\""
+            }
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "examples": {
+              "application/json": {
+                "ErrorType": "BREAKDOWN_NOT_FOUND",
+                "Message": "Can't find video with external id 'SampleExternalId' in account SampleAccountId."
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/{videoId}/Thumbnails/{thumbnailId}": {
+      "get": {
+        "description": "Get thumbnail of a video",
+        "operationId": "Get-thumbnail",
+        "summary": "Get Thumbnail",
+        "tags": [
+          "Faces"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "description": "The video id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "thumbnailId",
+            "in": "path",
+            "description": "The thumbnail id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Required for private videos<br>\nAccess token should match the authorization scope of the call (Account or Video, with Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Video thumbnail retrieved successfully"
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "examples": {
+              "application/json": {
+                "ErrorType": "NOT_FOUND",
+                "Message": "Thumbnail '476892a745' not found."
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          }
+        },
+        "produces": [
+          "image/jpeg",
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/{videoId}/InsightsWidget": {
+      "get": {
+        "description": "Get insights widget",
+        "operationId": "Get-insights-widget",
+        "summary": "Get Insights Widget",
+        "tags": [
+          "Widgets"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "description": "The video id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "A video access token with permissions that correspond to allowEdit parameter",
+            "type": "string"
+          },
+          {
+            "name": "widgetType",
+            "in": "query",
+            "description": "The type of widgets to include.",
+            "type": "string",
+            "enum": [
+              "People",
+              "Sentiments",
+              "Keywords",
+              "Search"
+            ]
+          },
+          {
+            "name": "allowEdit",
+            "in": "query",
+            "description": "Whether the widget allows editing of the insights.",
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Insights widget retrieved successfully"
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        },
+        "produces": [
+          "text/html"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/{videoId}/PlayerWidget": {
+      "get": {
+        "description": "Get player widget",
+        "operationId": "Get-player-widget",
+        "summary": "Get Player Widget",
+        "tags": [
+          "Widgets"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "description": "The video id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "A video access token with read permissions",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Player widget retrieved successfully"
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        },
+        "produces": [
+          "text/html"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Customization/Brands": {
+      "get": {
+        "description": "Gets all custom brands per the account and Bing brands activation state (whether Bing brands should be used when applying the model)",
+        "operationId": "Get-Brands",
+        "summary": "Get Brands",
+        "tags": [
+          "Brands"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get a list of brands",
+            "examples": {
+              "application/json": "[{\n  \"ReferenceUrl\": null,\n  \"id\": 97974,\n  \"name\": \"Example\",\n  \"accountId\": \"AccountId\",\n  \"lastModifierUserName\": \"UserName\",\n  \"Created\": \"2018-04-25T14:59:52.7433333\",\n  \"LastModified\": \"2018-04-25T14:59:52.7433333\",\n  \"enabled\": true,\n  \"description\": \"This is an example\",\n  \"tags\": [\"Tag1\", \"Tag2\"]\n}]"
+            }
+          },
+          "400": {
+            "description": "",
+            "examples": {
+              "application/json": {
+                "message": "The request is invalid."
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "examples": {
+              "application/json": {
+                "ErrorType": "USER_NOT_ALLOWED",
+                "Message": "Access token is not authorized to modify."
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "examples": {
+              "application/json": {
+                "message": "There was an error."
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "post": {
+        "description": "Creates a new custom brand for the specified account",
+        "operationId": "Create-Brand",
+        "summary": "Create Brand",
+        "tags": [
+          "Brands"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Body"
+            },
+            "description": "A create brand request"
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Brand Created Successfully",
+            "examples": {
+              "application/json": {
+                "ReferenceUrl": null,
+                "id": 97974,
+                "name": "Example",
+                "accountId": "SampleAccountId",
+                "lastModifierUserName": "SampleUserName",
+                "Created": "2018-04-25T14:59:52.7433333",
+                "LastModified": "2018-04-25T14:59:52.7433333",
+                "enabled": true,
+                "description": "This is an example",
+                "tags": [
+                  "Tag1",
+                  "Tag2"
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "examples": {
+              "application/json": {
+                "message": "The request is invalid."
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "examples": {
+              "application/json": {
+                "ErrorType": "USER_NOT_ALLOWED",
+                "Message": "Access token is not authorized to modify."
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "examples": {
+              "application/json": {
+                "message": "There was an error."
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Customization/Brands/{id}": {
+      "get": {
+        "description": "Get specific brand",
+        "operationId": "Get-Brand",
+        "summary": "Get Brand",
+        "tags": [
+          "Brands"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The brand id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested custom brand",
+            "examples": {
+              "application/json": {
+                "referenceUrl": "https://en.wikipedia.org/wiki/Example",
+                "id": 128846,
+                "name": "Example",
+                "accountId": "SampleAccountId",
+                "lastModifierUserName": "SampleUserName",
+                "created": "2018-01-06T13:51:38.3666667",
+                "lastModified": "2018-01-11T13:51:38.3666667",
+                "enabled": true,
+                "description": "This is an example",
+                "tags": [
+                  "Tag1",
+                  "Tag2"
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "examples": {
+              "application/json": {
+                "message": "The request is invalid."
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "examples": {
+              "application/json": {
+                "ErrorType": "USER_NOT_ALLOWED",
+                "Message": "Access token is not authorized to modify."
+              }
+            }
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "",
+            "examples": {
+              "application/json": {
+                "message": "There was an error."
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "put": {
+        "description": "Update Brand",
+        "operationId": "Update-Brand",
+        "summary": "Update Brand",
+        "tags": [
+          "Brands"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The brand id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account with Write)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Body"
+            },
+            "description": "The updated brand"
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Brand was updated",
+            "examples": {
+              "application/json": {
+                "referenceUrl": null,
+                "id": 97974,
+                "name": "Example",
+                "accountId": "SampeAccountId",
+                "lastModifierUserName": "SampleUserName",
+                "Created": "2018-04-25T14:59:52.7433333",
+                "lastModified": "2018-04-25T15:37:50.67",
+                "enabled": false,
+                "description": "This is an update example",
+                "tags": [
+                  "Tag1",
+                  "Tag2"
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "delete": {
+        "description": "Removes a brand in the specified account",
+        "operationId": "Delete-Brand",
+        "summary": "Delete Brand",
+        "tags": [
+          "Brands"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The brand id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account and Write)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Brand deleted successfully"
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "examples": {
+              "application/json": {
+                "ErrorType": "NOT_FOUND",
+                "Message": "Could not find Brand with id 97974 in account SampeAccountId"
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Customization/BrandsModelSettings": {
+      "get": {
+        "description": "Gets the model settings which determines which brands to use",
+        "operationId": "Get-Brands-Model-Settings",
+        "summary": "Get Brands Model Settings",
+        "tags": [
+          "Brands"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the brands model settings",
+            "examples": {
+              "application/json": {
+                "state": true,
+                "useBuiltIn": true
+              }
+            }
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "put": {
+        "description": "Update the brand model settings",
+        "operationId": "Update-Brands-Model-Settings",
+        "summary": "Update Brands Model Settings",
+        "tags": [
+          "Brands"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account with Write)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Body"
+            },
+            "description": "The updated brand model settings"
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Brands model settings updated successfully",
+            "examples": {
+              "application/json": {
+                "state": true,
+                "useBuiltIn": true
+              }
+            }
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Customization/Language": {
+      "post": {
+        "description": "Creates a language model.\nThere are two ways to upload files in the body using form-data.\n1. Key will be the file name and value will be the file.\n2. Key will be the file name and value will be a URL to txt file.",
+        "operationId": "create-language-model",
+        "summary": "Create Language Model",
+        "tags": [
+          "Languages"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account and Write)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelName",
+            "in": "query",
+            "description": "Model name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "Model language",
+            "required": true,
+            "type": "string",
+            "default": "en-US",
+            "enum": [
+              "en-US",
+              "ar-EG",
+              "de-DE",
+              "es-ES",
+              "fr-FR",
+              "hi-HI",
+              "it-IT",
+              "ja-JP",
+              "pt-BR",
+              "ru-RU",
+              "zh-CN"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the created model",
+            "examples": {
+              "application/json": {
+                "id": "dfae5745-6f1d-4edd-b224-42e1ab57a891",
+                "name": "TestModel",
+                "language": "En-US",
+                "state": "None",
+                "languageModelId": "00000000-0000-0000-0000-000000000000",
+                "files": [
+                  {
+                    "id": "25be7c0e-b6a6-4f48-b981-497e920a0bc9",
+                    "name": "hellofile",
+                    "enable": true,
+                    "creator": "John Doe",
+                    "creationTime": "2018-04-28T11:55:34.6733333"
+                  },
+                  {
+                    "id": "33025f5b-2354-485e-a50c-4e6b76345ca7",
+                    "name": "worldfile",
+                    "enable": true,
+                    "creator": "John Doe",
+                    "creationTime": "2018-04-28T11:55:34.86"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Returned if: Account not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "get": {
+        "description": "Get language models",
+        "operationId": "5ae5b4979e6ecbd30faa6f75",
+        "summary": "Get Language Models",
+        "tags": [
+          "Languages"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the created model",
+            "examples": {
+              "application/json": {
+                "id": "dfae5745-6f1d-4edd-b224-42e1ab57a891",
+                "name": "TestModel",
+                "language": "En-US",
+                "state": "None",
+                "languageModelId": "00000000-0000-0000-0000-000000000000",
+                "files": [
+                  {
+                    "id": "25be7c0e-b6a6-4f48-b981-497e920a0bc9",
+                    "name": "hellofile",
+                    "enable": true,
+                    "creator": "John Doe",
+                    "creationTime": "2018-04-28T11:55:34.6733333"
+                  },
+                  {
+                    "id": "33025f5b-2354-485e-a50c-4e6b76345ca7",
+                    "name": "worldfile",
+                    "enable": true,
+                    "creator": "John Doe",
+                    "creationTime": "2018-04-28T11:55:34.86"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Returned if: Account not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Customization/Language/{modelId}": {
+      "put": {
+        "description": "Updates a language model.\n\nThere are two ways to upload files in the body using form-data.\n1. Key will be the file name and value will be the file.\n2. Key will be the file name and value will be a URL to txt file.",
+        "operationId": "5ae5b3ce85f4684240bdb78f",
+        "summary": "Update Language Model",
+        "tags": [
+          "Languages"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account with Write)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelName",
+            "in": "query",
+            "description": "Model name",
+            "type": "string"
+          },
+          {
+            "name": "enable",
+            "in": "query",
+            "description": "Enable / Disable all files under the model",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the updated model",
+            "examples": {
+              "application/json": {
+                "id": "dfae5745-6f1d-4edd-b224-42e1ab57a891",
+                "name": "TestModel",
+                "language": "En-US",
+                "state": "None",
+                "languageModelId": "00000000-0000-0000-0000-000000000000",
+                "files": [
+                  {
+                    "id": "25be7c0e-b6a6-4f48-b981-497e920a0bc9",
+                    "name": "hellofile",
+                    "enable": true,
+                    "creator": "John Doe",
+                    "creationTime": "2018-04-28T11:55:34.6733333"
+                  },
+                  {
+                    "id": "33025f5b-2354-485e-a50c-4e6b76345ca7",
+                    "name": "worldfile",
+                    "enable": true,
+                    "creator": "John Doe",
+                    "creationTime": "2018-04-28T11:55:34.86"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Returned if: Account not found or model not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "get": {
+        "description": "Get language model",
+        "operationId": "5ae5b4fcbd9b437d27d53f16",
+        "summary": "Get Language Model",
+        "tags": [
+          "Languages"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the created model",
+            "examples": {
+              "application/json": {
+                "id": "dfae5745-6f1d-4edd-b224-42e1ab57a891",
+                "name": "TestModel",
+                "language": "En-US",
+                "state": "None",
+                "languageModelId": "00000000-0000-0000-0000-000000000000",
+                "files": [
+                  {
+                    "id": "25be7c0e-b6a6-4f48-b981-497e920a0bc9",
+                    "name": "hellofile",
+                    "enable": true,
+                    "creator": "John Doe",
+                    "creationTime": "2018-04-28T11:55:34.6733333"
+                  },
+                  {
+                    "id": "33025f5b-2354-485e-a50c-4e6b76345ca7",
+                    "name": "worldfile",
+                    "enable": true,
+                    "creator": "John Doe",
+                    "creationTime": "2018-04-28T11:55:34.86"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Returned if: Account not found or Model not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "delete": {
+        "description": "Delete language model",
+        "operationId": "5ae5ba53782606e91f65be9d",
+        "summary": "Delete Language Model",
+        "tags": [
+          "Languages"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account and Write)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Model deleted"
+          },
+          "400": {
+            "description": "Returned if: Account not found or Model not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Customization/Language/{modelId}/Files/{fileId}": {
+      "delete": {
+        "description": "Delete language model file",
+        "operationId": "5ae5b57b5de51e64ee52242e",
+        "summary": "Delete Language Model file",
+        "tags": [
+          "Languages"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "File id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account and Write)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "File deleted"
+          },
+          "400": {
+            "description": "Returned if: Account not found, Model not found or File not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "put": {
+        "description": "Update a language model file name or state",
+        "operationId": "5ae5b60547f33c1c2b2d1375",
+        "summary": "Update Language Model file",
+        "tags": [
+          "Languages"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "File id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account with Write)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fileName",
+            "in": "query",
+            "description": "File name",
+            "type": "string"
+          },
+          {
+            "name": "enable",
+            "in": "query",
+            "description": "Enable",
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the model file",
+            "examples": {
+              "application/json": {
+                "id": "84fcf1ac-1952-48f3-b372-18f768eedf83",
+                "name": "RenamedFile",
+                "enable": false,
+                "creator": "John Doe",
+                "creationTime": "2018-04-27T20:10:10.5233333"
+              }
+            }
+          },
+          "400": {
+            "description": "Returned if: Account not found, Model not found or File not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "get": {
+        "description": "Get language model file data and metadata",
+        "operationId": "5ae5b73f9e6416d7a9965b42",
+        "summary": "Get Language Model file data",
+        "tags": [
+          "Languages"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "File id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the file data and metadata",
+            "examples": {
+              "application/json": {
+                "content": "hello\r\nworld",
+                "id": "84fcf1ac-1952-48f3-b372-18f768eedf83",
+                "name": "Hello",
+                "enable": true,
+                "creator": "John Doe",
+                "creationTime": "2018-04-27T20:10:10.5233333"
+              }
+            }
+          },
+          "400": {
+            "description": "Returned if: Account not found, Model not found or File not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Customization/Language/{modelId}/Files/{fileId}/download": {
+      "get": {
+        "description": "Downlaod language model file content",
+        "operationId": "5ae5b99e522cb47bd9679122",
+        "summary": "Download Language Model file content",
+        "tags": [
+          "Languages"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fileId",
+            "in": "path",
+            "description": "File id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the file content and metadata"
+          },
+          "400": {
+            "description": "Returned if: Account not found, Model not found or File not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "produces": [
+          "application/octet-stream",
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Customization/Language/{modelId}/Train": {
+      "put": {
+        "description": "Train the language model based on the enabled files",
+        "operationId": "5ae5bac3cf761779a6c2ab27",
+        "summary": "Train Language Model",
+        "tags": [
+          "Languages"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "modelId",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Access token should match the authorization scope of the call (Account, with Write)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the trained model",
+            "examples": {
+              "application/json": {
+                "id": "41464adf-e432-42b1-8e09-f52905d7e29d",
+                "name": "TestModel",
+                "language": "En-US",
+                "state": "Waiting",
+                "languageModelId": "531e5745-681d-4e1d-b124-12e5ab57a891",
+                "files": [
+                  {
+                    "id": "84fcf1ac-1952-48f3-b372-18f768eedf83",
+                    "name": "RenamedFile",
+                    "enable": false,
+                    "creator": "John Doe",
+                    "creationTime": "2018-04-27T20:10:10.5233333"
+                  },
+                  {
+                    "id": "9ac35b4b-1381-49c4-9fe4-8234bfdd0f50",
+                    "name": "hellofile",
+                    "enable": true,
+                    "creator": "John Doe",
+                    "creationTime": "2018-04-27T20:10:10.68"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Returned if: Account not found or model not found."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/{location}/Accounts/{accountId}/Videos/{videoId}/ArtifactUrl": {
+      "get": {
+        "description": "Get video artifact download url",
+        "operationId": "get-video-artifact-download-url",
+        "summary": "Get Video Artifact Download Url",
+        "tags": [
+          "Videos"
+        ],
+        "parameters": [
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location indicates the Azure region to which the call should be routed<br>\nSee more details <a href=https://aka.ms/vi-docs-location target=\"_blank\">here</a>",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "northeurope",
+              "westus2",
+              "eastasia",
+              "trial"
+            ]
+          },
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "Account ID is a globally unique identifier (GUID) for the account<br>\nSee more details <a href=https://aka.ms/vi-docs-accountid target=\"_blank\">here</a>\n",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "videoId",
+            "in": "path",
+            "description": "The video id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "The artifact type to get",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "Ocr",
+              "Faces",
+              "FacesThumbnails",
+              "VisualContentModeration",
+              "KeyframesThumbnails",
+              "LanguageDetection"
+            ]
+          },
+          {
+            "name": "accessToken",
+            "in": "query",
+            "description": "Required for private videos<br>\nAccess token should match the authorization scope of the call (Account or Video, with Read)<br>\nNote that Access tokens expire within 1 hour<br>\nSee more details <a href=https://aka.ms/vi-docs-accesstoken target=\"_blank\">here</a>\n",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Video artifact file download url retrieved successfully",
+            "examples": {
+              "application/json": "\"https://test.blob.core.windows.net/asset-11111111-00aa-481d-af0e-a575b288e7cd/ocr.json?sv=2015-07-08&sr=c&sig=jgdhysuDBqUVFNSv2n8B81VcjjIi%2ByZNiDSXqV7Cp20%3D&se=2018-06-06T22:19:06Z&sp=rl\\\"\n"
+            }
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "vttBody": {
+      "example": "00:00:05.110 --> 00:00:10.880\nGalga dot. I'm AI'm a I'm a.\n\n00:00:10.880 --> 00:00:15.460\nI am amazed is that award I'm a be wondering.\n\n00:00:15.460 --> 00:00:18.980\nWhy that woman got noughties?\n\n00:00:18.980 --> 00:00:22.436\nThey're here they're here don't worry Emma Watson seems like\n\n00:00:22.494 --> 00:00:25.028\nthe type of girl who I would be friends with\n\n00:00:25.086 --> 00:00:25.950\nfor like 3 days\n\n00:00:25.950 --> 00:00:29.990\nand then get really sick of button on tell her."
+    },
+    "Body": {
+      "example": "{\"useBuiltIn\":true}"
+    }
+  },
+  "tags": []
+}
